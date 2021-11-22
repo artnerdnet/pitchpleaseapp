@@ -8039,6 +8039,11 @@ pirates@^4.0.1:
   dependencies:
     node-modules-regexp "^1.0.0"
 
+pitchplease@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/pitchplease/-/pitchplease-1.0.3.tgz#04ba2db1ff4ae9271011b6db1d30696f8dfe4233"
+  integrity sha512-pTeGT5WjfoEfHl0039SesXrUax1kc0Vwm0KNMN0OIqXIlhGMWqCZ5pQ63nSoYafnKoCwjCksFu3HvAggHAh6IQ==
+
 pkg-dir@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/pkg-dir/-/pkg-dir-2.0.0.tgz#f6d5d1109e19d63edf428e0bd57e12777615334b"
