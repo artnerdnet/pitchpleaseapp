@@ -4,7 +4,7 @@
 /**
   An in-place replacement for ScriptProcessorNode using AudioWorklet
 */
-console.log('test!!')
+// import { calcNotesFreq } from 'pitchplease';
 
 class RecorderProcessor extends AudioWorkletProcessor {
 
@@ -12,6 +12,7 @@ class RecorderProcessor extends AudioWorkletProcessor {
     super();
     this.initBuffer()
   }
+  // myMethod = calcNotesFreq()
 
   // 0. Determine the buffer size (this is the same as the 1st argument of ScriptProcessor)
   bufferSize = 4096
@@ -42,7 +43,9 @@ class RecorderProcessor extends AudioWorkletProcessor {
  * @returns {boolean}
  */
   process(inputs) {
-    console.log('test!!')
+
+    // test = this.myMethod()
+    // console.log(test, 'lala')
     // console.log(inputs[0][0], 'inputs[0][0]')
     // console.log(sampleRate, 'sample')
     // calculateAmplitudes(inputs[0][0], notesFreq, )
