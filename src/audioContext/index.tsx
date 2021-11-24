@@ -1,10 +1,10 @@
-import { AudioContext, AudioWorkletNode } from 'standardized-audio-context';
-import React, { useEffect, useRef, useState } from 'react';
-import getAudioInput from './getAudioInput';
+import React, { useEffect, useState } from 'react';
+// import { AudioContext, AudioWorkletNode } from 'standardized-audio-context';
+// import getAudioInput from './getAudioInput';
+// import { calculateAverageMagnitudeValues, interpretCorrelations } from 'pitchplease/dist/audioProcessing';
 import { main } from './mic-recorder';
 import { calcNotesFreq } from 'pitchplease/dist/frequencyComputations';
 import { calculateAmplitudes } from 'pitchplease/dist/audioProcessing/calculateAmplitudes';
-import { calculateAverageMagnitudeValues, interpretCorrelations } from 'pitchplease/dist/audioProcessing';
 import { computeMagnitudes } from 'pitchplease/dist/audioProcessing/calculateMagnitudes';
 import { findMaximumMagnitude } from 'pitchplease/dist/audioProcessing/calculateMagnitudes';
 

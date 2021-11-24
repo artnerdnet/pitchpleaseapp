@@ -81,4 +81,4 @@ class RecorderProcessor extends AudioWorkletProcessor {
 
 }
 
-registerProcessor("recorder.worklet", RecorderProcessor)
+registerProcessor("recorder.worklet", RecorderProcessor);

@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import workletUrl from 'worklet-loader!./recorder.worklet.js';
 
 export const main = async (setAudioInput: (data: any) => any) => {
   const context = new AudioContext();
@@ -11,7 +13,7 @@ export const main = async (setAudioInput: (data: any) => any) => {
 
   // NEW A: Loading the worklet processor
 
-  await context.audioWorklet.addModule("worklet/recorder.worklet.js")
+  await context.audioWorklet.addModule(workletUrl)
   // Create the recorder worklet
   const recorder = new AudioWorkletNode(
     context,
