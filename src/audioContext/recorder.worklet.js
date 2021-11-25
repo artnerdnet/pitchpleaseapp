@@ -22,6 +22,7 @@ class RecorderProcessor extends AudioWorkletProcessor {
 
   // 2. Create a buffer of fixed size
   _buffer = new Float32Array(this.bufferSize)
+  frequencies = []
 
   initBuffer() {
     this._bytesWritten = 0
@@ -56,7 +57,7 @@ class RecorderProcessor extends AudioWorkletProcessor {
     }
 
     if (!channelData) return
-    // console.log(channelData, 'dt')
+
     for (let i = 0; i < channelData.length; i++) {
       this._buffer[this._bytesWritten++] = channelData[i]
     }
@@ -78,11 +79,13 @@ class RecorderProcessor extends AudioWorkletProcessor {
       notesFrequencies
     );
 
+    this.frequencies = [...this.frequencies, dominantFrequency]
+
     // trim the buffer if ended prematurely
     this.port.postMessage(
       this._bytesWritten < this.bufferSize
         ? this._buffer.slice(0, this._bytesWritten)
-        : dominantFrequency
+        : this.frequencies
     )
 
     this.initBuffer()

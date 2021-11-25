@@ -29,19 +29,13 @@ class RecorderProcessor extends AudioWorkletProcessor {
     return this._bytesWritten === this.bufferSize
   }
 
-  // notesFreq = calcNotesFreq();
-
   /**
  * @param {Float32Array[][]} inputs
  * @returns {boolean}
  */
   process(inputs) {
-    // console.log(inputs[0][0], 'inputs[0][0]')
-    // console.log(sampleRate, 'sample')
-    // calculateAmplitudes(inputs[0][0], notesFreq, )
     // Grabbing the 1st channel similar to ScriptProcessorNode
     this.append(inputs[0][0])
-    console.log('sample', sampleRate)
     return true
   }
 
@@ -55,7 +49,6 @@ class RecorderProcessor extends AudioWorkletProcessor {
     }
 
     if (!channelData) return
-    // console.log(channelData, 'dt')
     for (let i = 0; i < channelData.length; i++) {
       this._buffer[this._bytesWritten++] = channelData[i]
     }
