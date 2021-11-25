@@ -4,15 +4,16 @@
 /**
   An in-place replacement for ScriptProcessorNode using AudioWorklet
 */
-// import { calcNotesFreq } from 'pitchplease';
+import { frequencyComputations, audioProcessing } from 'pitchplease';
+import { calculateAmplitudes } from 'pitchplease/dist/audioProcessing/calculateAmplitudes.js';
+
+const notesFrequencies = frequencyComputations.calcNotesFreq();
 
 class RecorderProcessor extends AudioWorkletProcessor {
-
   constructor() {
     super();
     this.initBuffer()
   }
-  // myMethod = calcNotesFreq()
 
   // 0. Determine the buffer size (this is the same as the 1st argument of ScriptProcessor)
   bufferSize = 4096
@@ -21,8 +22,6 @@ class RecorderProcessor extends AudioWorkletProcessor {
 
   // 2. Create a buffer of fixed size
   _buffer = new Float32Array(this.bufferSize)
-
-
 
   initBuffer() {
     this._bytesWritten = 0
@@ -36,22 +35,14 @@ class RecorderProcessor extends AudioWorkletProcessor {
     return this._bytesWritten === this.bufferSize
   }
 
-  // notesFreq = calcNotesFreq();
-
   /**
  * @param {Float32Array[][]} inputs
  * @returns {boolean}
  */
   process(inputs) {
-
-    // test = this.myMethod()
-    // console.log(test, 'lala')
-    // console.log(inputs[0][0], 'inputs[0][0]')
-    // console.log(sampleRate, 'sample')
-    // calculateAmplitudes(inputs[0][0], notesFreq, )
     // Grabbing the 1st channel similar to ScriptProcessorNode
     this.append(inputs[0][0])
-    // sampleRate
+
     return true
   }
 
@@ -72,16 +63,30 @@ class RecorderProcessor extends AudioWorkletProcessor {
   }
 
   flush() {
+    const amplitudes = calculateAmplitudes(
+      this._buffer,
+      notesFrequencies,
+      41000
+    );
+
+    const magnitudes = audioProcessing.computeMagnitudes(amplitudes);
+    const maxMagnitude = audioProcessing.findMaximumMagnitude(magnitudes);
+    const averageMagnitudeCalculation = audioProcessing.calculateAverageMagnitudeValues(magnitudes, maxMagnitude.strongestMagnitude);
+    const dominantFrequency = audioProcessing.interpretCorrelations(
+      averageMagnitudeCalculation,
+      maxMagnitude,
+      notesFrequencies
+    );
+
     // trim the buffer if ended prematurely
     this.port.postMessage(
       this._bytesWritten < this.bufferSize
         ? this._buffer.slice(0, this._bytesWritten)
-        : this._buffer
+        : dominantFrequency
     )
 
     this.initBuffer()
   }
-
 }
 
 registerProcessor("recorder.worklet", RecorderProcessor);
